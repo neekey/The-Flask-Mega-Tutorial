@@ -6,7 +6,7 @@ This is the practice demo project from the great [The Flask Mega-Tutorial](https
 
 ```
 $ python -m venv flask
-``
+```
 
 # Install deps
 
