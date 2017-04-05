@@ -16,7 +16,8 @@ $ flask/bin/pip install flask-login
 $ flask/bin/pip install flask-openid
 $ flask/bin/pip install flask-mail
 $ flask/bin/pip install flask-sqlalchemy
-$ flask/bin/pip install sqlalchemy-migrate==0.7.2
+$ flask/bin/pip install pbr
+$ flask/bin/pip install sqlalchemy-migrate
 $ flask/bin/pip install flask-whooshalchemy
 $ flask/bin/pip install flask-wtf
 $ flask/bin/pip install flask-babel
