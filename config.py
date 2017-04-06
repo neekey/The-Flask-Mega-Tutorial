@@ -15,3 +15,13 @@ OPENID_PROVIDERS = [
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+OAUTH_CREDENTIALS = {
+    'facebook': {
+        'id': '1867530783461665',
+        'secret': '185275a5e4b189218d55ac8e56b9a129',
+        'authorize_url': 'https://graph.facebook.com/oauth/authorize',
+        'access_token_url': 'https://graph.facebook.com/oauth/access_token',
+        'base_url': 'https://graph.facebook.com/'
+    }
+}
