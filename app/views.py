@@ -1,8 +1,7 @@
-from app import app, lm, oid, db
+from app import app, lm, db
 from flask import render_template, flash, redirect, session, url_for, request, g
-from flask_login import login_user, logout_user, current_user, login_required
+from flask_login import login_user, current_user, login_required
 from .models import User
-from .forms import LoginForm
 from .OAuth import OAuthSignIn
 
 
@@ -54,7 +53,7 @@ def oauth_callback(provider):
         nickname = username
         if nickname is None or nickname == '':
             nickname = email.split('@')[0]
-        user = User(nickname=nickname, email=email)
+        user = User(nickname=nickname, email=email, social_id=social_id)
         db.session.add(user)
         db.session.commit()
     remember_me = False
