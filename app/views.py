@@ -1,5 +1,5 @@
 from app import app, lm, db
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, g
 from flask_login import login_user, current_user, login_required
 from .models import User
 from .OAuth import OAuthSignIn
@@ -47,7 +47,7 @@ def oauth_callback(provider):
     social_id, username, email = oauth.callback()
     if social_id is None:
         flash('Authentication failed.')
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
     user = User.query.filter_by(email=email).first()
     if user is None:
         nickname = username
@@ -56,11 +56,7 @@ def oauth_callback(provider):
         user = User(nickname=nickname, email=email, social_id=social_id)
         db.session.add(user)
         db.session.commit()
-    remember_me = False
-    if 'remember_me' in session:
-        remember_me = session['remember_me']
-        session.pop('remember_me', None)
-    login_user(user, remember=remember_me)
+    login_user(user)
     return redirect(request.args.get('next') or url_for('index'))
 
 
