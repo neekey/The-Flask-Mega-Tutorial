@@ -1,6 +1,6 @@
 from app import app, lm, db
 from flask import render_template, flash, redirect, url_for, request, g
-from flask_login import login_user, current_user, login_required
+from flask_login import login_user, current_user, login_required, logout_user
 from .models import User
 from .OAuth import OAuthSignIn
 
@@ -66,6 +66,12 @@ def login():
         return redirect(url_for('index'))
     return render_template('login.html',
                            title='Sign In')
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.before_request
