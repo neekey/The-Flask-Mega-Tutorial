@@ -19,11 +19,11 @@ def index():
     user = g.user
     posts = [
         {
-            'author': 'Neekey',
+            'author': user,
             'body': 'A Python newbie from Fed world.'
         },
         {
-            'author': 'Mason',
+            'author': user,
             'body': 'A good Chef who can cook delicious chicken.'
         },
     ]
@@ -55,6 +55,7 @@ def oauth_callback(provider):
         nickname = username
         if nickname is None or nickname == '':
             nickname = email.split('@')[0]
+        nickname = User.make_unique_nickname(nickname)
         user = User(nickname=nickname, email=email, social_id=social_id)
         db.session.add(user)
         db.session.commit()
@@ -104,7 +105,7 @@ def user(nickname):
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    form = EditForm()
+    form = EditForm(g.user.nickname)
     if form.validate_on_submit():
         g.user.nickname = form.nickname.data
         g.user.about_me = form.about_me.data
@@ -116,4 +117,17 @@ def edit():
         form.nickname.data = g.user.nickname
         form.about_me.data = g.user.about_me
     return render_template('edit.html', form=form)
+
+
+@app.errorhandler(400)
+def not_found_error(error):
+    return render_template('404.html')
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html')
+
+
 
