@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import ADMINS, MAIL_PASSWORD, MAIL_PORT, MAIL_SERVER, MAIL_USERNAME
@@ -9,6 +10,7 @@ lm.init_app(app)
 lm.login_view = 'login'
 app.config.from_object('config')
 db = SQLAlchemy(app)
+mail = Mail(app)
 
 # `python -m smtpd -n -c DebuggingServer localhost:25` start a testing server
 if not app.debug:
